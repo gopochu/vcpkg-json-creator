@@ -8,7 +8,7 @@ void cmakePresets(){
     // Создаем JSON объект и заполняем его данными
     ordered_json jsonObject;
 
-    jsonObject["version"] = "2";
+    jsonObject["version"] = 2;
     jsonObject["configurePresets"] = ordered_json::array({
         {
             {"name", "vcpkg"},
@@ -34,7 +34,7 @@ void cmakeUserPresets(){
     // Создаем JSON объект и заполняем его данными
     ordered_json jsonObject;
 
-    jsonObject["version"] = "2";
+    jsonObject["version"] = 2;
     jsonObject["configurePresets"] = ordered_json::array({
         {
             {"name", "default"},
