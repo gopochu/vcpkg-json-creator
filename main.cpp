@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <nlohmann/json.hpp>
 
 using ordered_json = nlohmann::ordered_json;
@@ -83,10 +84,10 @@ void vcpkgConf(){
     }
 }
 
-void vcpkg(std::string library){
+void vcpkg(std::vector<std::string> libraries){
     ordered_json jsonObject;
     jsonObject["dependencies"] = ordered_json::array({
-        library
+        libraries
     });
 
     std::ofstream file("vcpkg.json");
@@ -99,19 +100,28 @@ void vcpkg(std::string library){
     }
 }
 
-void createJson(){
-    std::string library;
-    std::cout << "Input library name: " << std::endl;
-    std::cin >> library;
+void createJson() {
+    std::string input;
+    std::vector<std::string> libraries;
 
+    std::cout << "Input library names separated by spaces, then press Enter: " << std::endl;
+    std::getline(std::cin, input);
+
+    // Разбиваем строку на отдельные библиотеки
+    std::istringstream stream(input);
+    std::string library;
+    while (stream >> library) {
+        libraries.push_back(library);
+    }
+
+    // Вызываем методы для создания файлов
     cmakePresets();
     cmakeUserPresets();
     vcpkgConf();
-    vcpkg(library);
+    vcpkg(libraries);
 
     system("pause");
 }
-
 int main(){
     createJson();
 }
